@@ -1,6 +1,5 @@
 package tasks;
-
-import java.util.ArrayList;
+import manager.*;
 
 public class Main {
 
@@ -27,20 +26,20 @@ public class Main {
         System.out.println(manager.getEpics());
         System.out.println();
 
-        manager.updateTask(task1 = new Task(task1.getId(), "task1", "des1", "IN_PROGRESS"));
+        manager.updateTask(task1 = new Task(task1.getId(), "task1", "des1", "IN_PROGRESS"));//апдтейтим таски и сабтаски
         manager.updateTask(task2 = new Task(task2.getId(), "task1", "des1", "DONE"));
         manager.updateSubtask(subtask1 = new Subtask(subtask1.getId(), "sub1", "des1", "IN_PROGRESS", epicId1));
         manager.updateSubtask(subtask2 = new Subtask(subtask2.getId(), "sub2", "des2", "DONE", epicId1));
         manager.updateSubtask(subtask3 = new Subtask(subtask3.getId(), "sub3", "des3", "DONE", epicId2));
-        System.out.println(manager.getTasks());
+        System.out.println(manager.getTasks());//проверяем
         System.out.println(manager.getSubtasks());
         System.out.println(manager.getEpics());
         System.out.println();
 
-        manager.deleteTask(task1.getId());
+        manager.deleteTask(task1.getId());//удаляем таску, сабтаску и эпик
         manager.deleteSubtask(subtask3.getId());
         manager.deleteEpic(epic1.getId());
-        System.out.println(manager.getTasks());
+        System.out.println(manager.getTasks());//проверяем
         System.out.println(manager.getSubtasks());
         System.out.println(manager.getEpics());
 

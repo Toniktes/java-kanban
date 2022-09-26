@@ -2,7 +2,7 @@ package tasks;
 
 import java.util.Objects;
 
-class Subtask extends Task {
+public class Subtask extends Task {
     protected int epicId;// id эпика которому принадлежит саб
 
     public Subtask(int id, String name, String description, String status, int epicId) {
