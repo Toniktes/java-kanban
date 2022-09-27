@@ -14,20 +14,17 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public List<Task> getTasks() {//получить все таски
-        ArrayList<Task> task = new ArrayList<>(tasks.values());
-        return task;
+        return new ArrayList<>(tasks.values());
     }
 
     @Override
     public List<Epic> getEpics() {//получить все эпики
-        ArrayList<Epic> epic = new ArrayList<>(epics.values());
-        return epic;
+        return new ArrayList<>(epics.values());
     }
 
     @Override
     public List<Subtask> getSubtasks() {//получить все сабтаски
-        ArrayList<Subtask> subtask = new ArrayList<>(subtasks.values());
-        return subtask;
+        return new ArrayList<>(subtasks.values());
     }
 
     @Override
@@ -41,8 +38,8 @@ public class TaskManagerImpl implements TaskManager {
     public List<Subtask> getEpicSubtasks(int epicId) {//полчуить все сбатаски эпика
         ArrayList<Integer> idSubstaks = new ArrayList<>(getEpic(epicId).getIdSubtasks());//получаем лист id сабов в эпике
         ArrayList<Subtask> epicSubtask = new ArrayList<>();
-        for (int i = 0; i < idSubstaks.size(); i++) {//получаем все сабы из эпика
-            epicSubtask.add(getSubtask(idSubstaks.get(i)));//добавляем их в лист
+        for (Integer idSubstak : idSubstaks) {//получаем все сабы из эпика
+            epicSubtask.add(getSubtask(idSubstak));//добавляем их в лист
         }
         return epicSubtask;
     }
