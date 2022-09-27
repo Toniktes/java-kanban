@@ -1,10 +1,12 @@
-package tasks;
 import manager.*;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
 
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager_ manager = new TaskManager_();
+        TaskManagerImpl manager = new TaskManagerImpl();
         Task task1 = new Task("task1", "des1", "NEW");//создаем 2 таски
         Task task2 = new Task("task1", "des1", "NEW");
         final int taskId1 = manager.addNewTask(task1);
