@@ -1,6 +1,7 @@
 package manager;
 
 import tasks.*;
+
 import java.util.List;
 
 public interface TaskManager {
@@ -39,6 +40,8 @@ public interface TaskManager {
     void deleteEpic(int id);
 
     void deleteSubtask(int id);
+
+    List<Task> getHistory();
 
 
 }

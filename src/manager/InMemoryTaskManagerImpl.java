@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TaskManagerImpl implements TaskManager {
+public class InMemoryTaskManagerImpl implements TaskManager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();
     private final HashMap<Integer, Epic> epics = new HashMap<>();
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private int createId = 0;//Идентификатор задачи
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public List<Task> getTasks() {//получить все таски
@@ -46,17 +47,23 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public Task getTask(int id) {
-        return tasks.get(id);
+        Task task = tasks.get(id);
+        historyManager.addTask(task);
+        return task;
     }
 
     @Override
     public Epic getEpic(int id) {
-        return epics.get(id);
+        Epic epic = epics.get(id);
+        historyManager.addTask(epic);
+        return epic;
     }
 
     @Override
     public Subtask getSubtask(int id) {
-        return subtasks.get(id);
+        Subtask subtask = subtasks.get(id);
+        historyManager.addTask(subtask);
+        return subtask;
     }
 
     @Override
@@ -105,27 +112,27 @@ public class TaskManagerImpl implements TaskManager {
         Epic epic = epics.get(epicId);
         List<Integer> sub = epic.getIdSubtasks();//полчаем id сабов в эпике
         if (subtasks.isEmpty()) {
-            epic.setStatus("NEW");//если эпик без сабов, то new
+            epic.setStatus(TaskStatus.NEW);//если эпик без сабов, то new
             return;
         }
-        String status = "NEW";
+        TaskStatus status = TaskStatus.NEW;
         int index = 0;
 
         for (int id : sub) {
             Subtask subtask = subtasks.get(id);//находим сабы, которые входят в эпик
-            if (subtask.getStatus().equals("NEW")) {//если new то статус не меняем
+            if (subtask.getStatus().equals(TaskStatus.NEW)) {//если new то статус не меняем
                 continue;
             }
-            if (subtask.getStatus().equals("IN_PROGRESS")) {//если есть хоть один в процессе, значит меняем статус
-                status = "IN_PROGRESS";
+            if (subtask.getStatus().equals(TaskStatus.IN_PROGRESS)) {//если есть хоть один в процессе, значит меняем статус
+                status = TaskStatus.IN_PROGRESS;
                 continue;
             }
-            if (subtask.getStatus().equals("DONE")) {//считаем количество выполненных сабов
+            if (subtask.getStatus().equals(TaskStatus.DONE)) {//считаем количество выполненных сабов
                 index++;
             }
         }
         if (index == sub.size()) {//если совпадает кол-во done и всего сабов, то статус done
-            epic.setStatus("DONE");
+            epic.setStatus(TaskStatus.DONE);
         } else {
             epic.setStatus(status);
         }
@@ -162,4 +169,9 @@ public class TaskManagerImpl implements TaskManager {
             subtasks.remove(id);//удаляем сабтаску
         }
     }
+
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
+    }//получить историю просмотров задач
 }
