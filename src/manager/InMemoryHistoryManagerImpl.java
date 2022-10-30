@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class inMemoryHistoryManagerImpl implements HistoryManager {
+public class InMemoryHistoryManagerImpl implements HistoryManager {
 
     private static class Node {
         private Task task;
@@ -59,9 +59,7 @@ public class inMemoryHistoryManagerImpl implements HistoryManager {
 
     private void removeNode(int id) {
         final Node node = nodeMap.remove(id);
-        if (node == null) {
-            return;
-        } else {
+        if (node != null) {
             if (node.prev != null && node.next != null) {
                 node.prev.next = node.next;
                 node.next.prev = node.prev;

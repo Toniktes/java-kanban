@@ -11,7 +11,7 @@ public class InMemoryTaskManagerImpl implements TaskManager {
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
-    private int createId = 0;
+    private int createdId = 0;
     private final HistoryManager historyManager = Manager.getDefaultHistory();
 
     @Override
@@ -69,7 +69,7 @@ public class InMemoryTaskManagerImpl implements TaskManager {
 
     @Override
     public int addNewTask(Task task) {
-        final int id = ++createId;
+        final int id = ++createdId;
         task.setId(id);
         tasks.put(id, task);
         return id;
@@ -77,7 +77,7 @@ public class InMemoryTaskManagerImpl implements TaskManager {
 
     @Override
     public int addNewEpic(Epic epic) {
-        final int id = ++createId;
+        final int id = ++createdId;
         epic.setId(id);
         epics.put(id, epic);
         return id;
@@ -89,7 +89,7 @@ public class InMemoryTaskManagerImpl implements TaskManager {
             System.out.println("Такого эпика нет");
             return -1;
         } else {
-            final int id = ++createId;
+            final int id = ++createdId;
             subtask.setId(id);
             subtasks.put(id, subtask);
             epics.get(subtask.getEpicId()).addIdSubtasks(id);
