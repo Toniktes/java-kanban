@@ -42,4 +42,8 @@ public interface TaskManager {
     void deleteSubtask(int id);
 
     List<Task> getHistory();
+
+    HistoryManager getHistoryManager();
+
+    void addToHistory(int id);
 }

@@ -15,6 +15,11 @@ public class InMemoryTaskManagerImpl implements TaskManager {
     private final HistoryManager historyManager = Manager.getDefaultHistory();
 
     @Override
+    public HistoryManager getHistoryManager() {
+        return historyManager;
+    }
+
+    @Override
     public List<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
@@ -178,5 +183,16 @@ public class InMemoryTaskManagerImpl implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
+    }
+
+    @Override
+    public void addToHistory(int id) {
+        if (tasks.containsKey(id)) {
+            historyManager.add(tasks.get(id));
+        } else if (epics.containsKey(id)) {
+            historyManager.add(epics.get(id));
+        } else if (subtasks.containsKey(id)) {
+            historyManager.add(subtasks.get(id));
+        }
     }
 }
