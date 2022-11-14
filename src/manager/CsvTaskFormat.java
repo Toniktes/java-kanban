@@ -2,7 +2,6 @@ package manager;
 
 import tasks.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

@@ -126,14 +126,14 @@ public class InMemoryTaskManagerImpl implements TaskManager {
 
         for (int id : sub) {
             Subtask subtask = subtasks.get(id);
-            if (subtask.getStatus().equals(TaskStatus.NEW)) {
+            if (subtask.getStatus() == TaskStatus.NEW) {
                 continue;
             }
-            if (subtask.getStatus().equals(TaskStatus.IN_PROGRESS)) {
+            if (subtask.getStatus() == TaskStatus.IN_PROGRESS) {
                 status = TaskStatus.IN_PROGRESS;
                 continue;
             }
-            if (subtask.getStatus().equals(TaskStatus.DONE)) {
+            if (subtask.getStatus() == TaskStatus.DONE) {
                 index++;
             }
         }

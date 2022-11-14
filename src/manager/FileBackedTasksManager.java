@@ -3,13 +3,11 @@ package manager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
-import tasks.TaskStatus;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
     private final File file;
@@ -30,9 +28,9 @@ public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
                 }
                 Task task = CsvTaskFormat.fromString(line);
 
-                if (task instanceof Epic) {
+                if (getType(task) == TaskType.EPIC) {
                     taskManager.addNewEpic((Epic) task);
-                } else if (task instanceof Subtask) {
+                } else if (getType(task) == TaskType.SUBTASK) {
                     taskManager.addNewSubtask((Subtask) task);
                 } else {
                     taskManager.addNewTask(task);
@@ -48,6 +46,16 @@ public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
             throw new ManagerSaveException("ошибка чтения из файла");
         }
         return taskManager;
+    }
+
+    public static TaskType getType(Task task) {
+        if (task instanceof Epic) {
+            return TaskType.EPIC;
+        } else if (task instanceof Subtask) {
+            return TaskType.SUBTASK;
+        } else {
+            return TaskType.TASK;
+        }
     }
 
     protected void save() {
