@@ -46,4 +46,5 @@ public interface TaskManager {
     HistoryManager getHistoryManager();
 
     void addToHistory(int id);
+    void cleanHistory();
 }

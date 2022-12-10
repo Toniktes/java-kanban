@@ -87,5 +87,16 @@ public class InMemoryHistoryManagerImpl implements HistoryManager {
     @Override
     public void remove(int id) {
         removeNode(id);
+        if(nodeMap.isEmpty()) {
+            first = null;
+            last = null;
+        }
+    }
+
+    @Override
+    public void cleanHistory() {
+        nodeMap.clear();
+        first = null;
+        last = null;
     }
 }

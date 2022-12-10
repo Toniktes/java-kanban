@@ -17,7 +17,7 @@ public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
         this.file = file;
     }
 
-    public static FileBackedTasksManager loadFromFile(File file) {
+    public FileBackedTasksManager loadFromFile() {
         final FileBackedTasksManager taskManager = new FileBackedTasksManager(file);
 
         try (BufferedReader br = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
@@ -29,11 +29,11 @@ public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
                 Task task = CsvTaskFormat.fromString(line);
 
                 if (getType(task) == TaskType.EPIC) {
-                    taskManager.addNewEpic((Epic) task);
+                    createEpic((Epic) task);
                 } else if (getType(task) == TaskType.SUBTASK) {
-                    taskManager.addNewSubtask((Subtask) task);
+                    createSubtask((Subtask) task);
                 } else {
-                    taskManager.addNewTask(task);
+                    createTask(task);
                 }
             }
 
@@ -68,18 +68,18 @@ public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
-            writer.write(heading);
+            //writer.write(heading);
 
             for (Task task : getTasks()) {
-                writer.write(CsvTaskFormat.toString(task) + "/n");
+                writer.write(CsvTaskFormat.toString(task) + "\n");
             }
             for (Epic epic : getEpics()) {
-                writer.write(CsvTaskFormat.toString(epic) + "/n");
+                writer.write(CsvTaskFormat.toString(epic) + "\n");
             }
             for (Subtask subtask : getSubtasks()) {
-                writer.write(CsvTaskFormat.toString(subtask) + "/n");
+                writer.write(CsvTaskFormat.toString(subtask) + "\n");
             }
-            writer.write("/n");
+            writer.write("\n");
 
             writer.write(CsvTaskFormat.historyToString(getHistoryManager()));
         } catch (IOException e) {
@@ -87,7 +87,17 @@ public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
         }
     }
 
+    public void createTask(Task task) {
+       super.addNewTask(task);
+    }
 
+    public void createEpic(Epic epic) {
+        super.addNewEpic(epic);
+    }
+
+    public void createSubtask(Subtask subtask) {
+        super.addNewSubtask(subtask);
+    }
     @Override
     public Task getTask(int id) {
         Task task = super.getTask(id);

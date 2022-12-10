@@ -34,23 +34,9 @@ public class Main {
         System.out.println(manager.getEpic(epicId2));
         System.out.println();
 
-        System.out.println(manager.getSubtask(subtask2Id));
-        System.out.println(manager.getHistory());
-        System.out.println(manager.getTask(taskId1));
-        System.out.println(manager.getHistory());
-        System.out.println(manager.getEpic(epicId1));
-        System.out.println(manager.getHistory());
-        System.out.println();
+        manager.deleteTask(111);*/
 
-        manager.deleteTask(taskId1);
-        System.out.println(manager.getHistory());
-        System.out.println();
-
-        System.out.println(manager.getEpic(epicId2));
-        System.out.println(manager.getHistory());
-        manager.deleteEpic(epicId1);
-        System.out.println(manager.getHistory());*/
-
+/*
         FileBackedTasksManager manager2 = new FileBackedTasksManager(new File("resources/task.csv"));
         Task task1 = new Task("task1", "des1", TaskStatus.NEW);
         Task task2 = new Task("task2", "des2", TaskStatus.NEW);
@@ -88,5 +74,5 @@ public class Main {
         manager2.deleteEpic(epicId3);
         System.out.println(manager2.getHistory());
         System.out.println();
-    }
-}
+    }*/
+}}
