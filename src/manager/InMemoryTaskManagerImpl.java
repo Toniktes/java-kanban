@@ -268,7 +268,7 @@ public class InMemoryTaskManagerImpl implements TaskManager {
 
     @Override
     public void cleanHistory() {
-        historyManager.cleanHistory();
+        historyManager.clearHistory();
     }
 
     public List<Task> getPrioritizedTasks() {

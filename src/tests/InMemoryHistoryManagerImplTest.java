@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import tasks.*;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class InMemoryHistoryManagerImplTest {
     protected Task task;
@@ -30,7 +30,7 @@ class InMemoryHistoryManagerImplTest {
 
     @AfterEach
     void afterEach() {
-        historyManager.cleanHistory();
+        historyManager.clearHistory();
     }
 
     @Test
@@ -46,7 +46,7 @@ class InMemoryHistoryManagerImplTest {
         historyManager.add(task2);
         historyManager.remove(task1.getId());
         historyManager.remove(task2.getId());
-        assertEquals(Collections.EMPTY_LIST, historyManager.getHistory());
+        assertTrue(historyManager.getHistory().isEmpty());
     }
 
     @Test

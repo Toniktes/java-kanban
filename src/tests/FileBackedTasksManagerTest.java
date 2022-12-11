@@ -59,9 +59,9 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
         fileBackedTasksManager.loadFromFile();
         fileBackedTasksManager.clearAll();
-        assertEquals(Collections.EMPTY_LIST, fileBackedTasksManager.getTasks());
-        assertEquals(Collections.EMPTY_LIST, fileBackedTasksManager.getEpics());
-        assertEquals(Collections.EMPTY_LIST, fileBackedTasksManager.getSubtasks());
+        assertTrue(fileBackedTasksManager.getTasks().isEmpty());
+        assertTrue(fileBackedTasksManager.getEpics().isEmpty());
+        assertTrue(fileBackedTasksManager.getSubtasks().isEmpty());
     }
 
     @Test
