@@ -1,5 +1,9 @@
-package manager;
+package manager.file;
 
+import manager.InMemoryTaskManagerImpl;
+import manager.exception.ManagerSaveException;
+import manager.TaskType;
+import manager.history.HistoryManager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
@@ -10,12 +14,17 @@ import java.nio.file.Files;
 
 
 public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
-    private final File file;
+    private File file;
     private final String heading = "id,type,name,status,description,epic";
+
+    public FileBackedTasksManager(HistoryManager historyManager) {
+        super(historyManager);
+    }
 
     public FileBackedTasksManager(File file) {
         this.file = file;
     }
+
 
     public FileBackedTasksManager loadFromFile() {
         final FileBackedTasksManager taskManager = new FileBackedTasksManager(file);
@@ -88,7 +97,7 @@ public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
     }
 
     public void createTask(Task task) {
-       super.addNewTask(task);
+        super.addNewTask(task);
     }
 
     public void createEpic(Epic epic) {
@@ -98,6 +107,7 @@ public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
     public void createSubtask(Subtask subtask) {
         super.addNewSubtask(subtask);
     }
+
     @Override
     public Task getTask(int id) {
         Task task = super.getTask(id);
@@ -173,6 +183,24 @@ public class FileBackedTasksManager extends InMemoryTaskManagerImpl {
     @Override
     public void deleteSubtask(int id) {
         super.deleteSubtask(id);
+        save();
+    }
+
+    @Override
+    public void deleteAllTasks() {
+        super.deleteAllTasks();
+        save();
+    }
+
+    @Override
+    public void deleteAllEpics() {
+        super.deleteAllEpics();
+        save();
+    }
+
+    @Override
+    public void deleteAllSubtasks() {
+        super.deleteAllSubtasks();
         save();
     }
 

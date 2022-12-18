@@ -1,4 +1,4 @@
-package tests;
+package tests.manager;
 
 import manager.InMemoryTaskManagerImpl;
 import org.junit.jupiter.api.AfterEach;

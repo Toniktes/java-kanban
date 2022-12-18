@@ -1,5 +1,8 @@
 package manager;
 
+import manager.exception.CheckIntersectionException;
+import manager.exception.NoValueFoundException;
+import manager.history.HistoryManager;
 import tasks.*;
 
 import java.time.Duration;
@@ -202,7 +205,7 @@ public class InMemoryTaskManagerImpl implements TaskManager {
 
     @Override
     public void updateSubtask(Subtask subtask) {
-        if(subtask != null && subtasks.containsKey(subtask.getId())) {
+        if (subtask != null && subtasks.containsKey(subtask.getId())) {
             addToPrioritizedTasks(subtask);
             subtasks.put(subtask.getId(), subtask);
             updateEpicStatus(subtask.getEpicId());
@@ -251,6 +254,31 @@ public class InMemoryTaskManagerImpl implements TaskManager {
     }
 
     @Override
+    public void deleteAllTasks() {
+        tasks.clear();
+        prioritizedTasks.clear();
+    }
+
+    @Override
+    public void deleteAllEpics() {
+        subtasks.clear();
+        epics.clear();
+    }
+
+    @Override
+    public void deleteAllSubtasks() {
+        for (Epic epic : epics.values()) {
+            for (int subtaskId : epic.getIdSubtasks()) {
+                Subtask subtask = subtasks.get(subtaskId);
+                prioritizedTasks.remove(subtask);
+                subtasks.remove(subtaskId);
+                historyManager.remove(subtaskId);
+            }
+            epic.getIdSubtasks().clear();
+        }
+    }
+
+    @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
@@ -271,6 +299,7 @@ public class InMemoryTaskManagerImpl implements TaskManager {
         historyManager.clearHistory();
     }
 
+    @Override
     public List<Task> getPrioritizedTasks() {
         return new ArrayList<>(prioritizedTasks);
     }

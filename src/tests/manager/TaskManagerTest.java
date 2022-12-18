@@ -1,6 +1,6 @@
-package tests;
+package tests.manager;
 
-import manager.NoValueFoundException;
+import manager.exception.NoValueFoundException;
 import manager.TaskManager;
 import org.junit.jupiter.api.Test;
 import tasks.*;

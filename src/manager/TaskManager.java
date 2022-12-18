@@ -1,5 +1,6 @@
 package manager;
 
+import manager.history.HistoryManager;
 import tasks.*;
 
 import java.util.List;
@@ -41,10 +42,18 @@ public interface TaskManager {
 
     void deleteSubtask(int id);
 
+    void deleteAllEpics();
+
+    void deleteAllSubtasks();
+
     List<Task> getHistory();
 
     HistoryManager getHistoryManager();
 
     void addToHistory(int id);
     void cleanHistory();
+
+    void deleteAllTasks();
+
+    List<Task> getPrioritizedTasks();
 }

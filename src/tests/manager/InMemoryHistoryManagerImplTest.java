@@ -1,7 +1,7 @@
-package tests;
+package tests.manager;
 
-import manager.HistoryManager;
-import manager.InMemoryHistoryManagerImpl;
+import manager.history.HistoryManager;
+import manager.history.InMemoryHistoryManagerImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

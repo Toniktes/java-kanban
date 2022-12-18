@@ -36,8 +36,8 @@ public class Main {
 
         manager.deleteTask(111);*/
 
-/*
-        FileBackedTasksManager manager2 = new FileBackedTasksManager(new File("resources/task.csv"));
+
+        /*FileBackedTasksManager manager2 = new FileBackedTasksManager(new File("resources/task.csv"));
         Task task1 = new Task("task1", "des1", TaskStatus.NEW);
         Task task2 = new Task("task2", "des2", TaskStatus.NEW);
         final int taskId3 = manager2.addNewTask(task1);
@@ -73,6 +73,6 @@ public class Main {
         System.out.println(manager2.getHistory());
         manager2.deleteEpic(epicId3);
         System.out.println(manager2.getHistory());
-        System.out.println();
-    }*/
-}}
+        System.out.println();*/
+    }
+}
