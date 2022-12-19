@@ -1,6 +1,7 @@
 package manager.http;
 
 import com.google.gson.*;
+import manager.Manager;
 import manager.TaskType;
 import manager.adapters.InstantAdapter;
 import manager.file.CsvTaskFormat;
@@ -13,13 +14,18 @@ import tasks.Task;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class HttpTaskManager extends FileBackedTasksManager {
     final KVTaskClient client;
+    String path = "8080";
     private static final Gson gson =
             new GsonBuilder().registerTypeAdapter(Instant.class, new InstantAdapter()).create();
+
+    public HttpTaskManager() throws IOException, InterruptedException {
+        super(Manager.getDefaultHistory());
+        client = new KVTaskClient(path);
+    }
 
     public HttpTaskManager(HistoryManager historyManager, String path) throws IOException, InterruptedException {
         super(historyManager);
@@ -73,12 +79,12 @@ public class HttpTaskManager extends FileBackedTasksManager {
         String jsonTasks = gson.toJson(new ArrayList<>(tasks.values()));
         client.put("tasks", jsonTasks);
         String jsonEpics = gson.toJson(new ArrayList<>(epics.values()));
-        client.put("epics", jsonTasks);
+        client.put("epics", jsonEpics);
         String jsonSubtasks = gson.toJson(new ArrayList<>(subtasks.values()));
-        client.put("subtasks", jsonTasks);
+        client.put("subtasks", jsonSubtasks);
 
         String jsonHistory = gson.toJson(historyManager.getHistory().stream().map(Task::getId).collect(Collectors.toList()));
         client.put("history", jsonHistory);
-        }
     }
+}
 

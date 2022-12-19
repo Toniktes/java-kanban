@@ -1,6 +1,5 @@
 package manager.history;
 
-import manager.history.HistoryManager;
 import tasks.Task;
 
 import java.util.ArrayList;
